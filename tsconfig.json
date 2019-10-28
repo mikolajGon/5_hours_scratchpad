@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2017",
+    "outDir": "lib",
+    "declaration": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strict": true
+  },
+  "include": ["src"]
+}

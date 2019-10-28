@@ -1,0 +1,22 @@
+{
+  "name": "five-hours",
+  "version": "0.0.0",
+  "private": true,
+  "description": "notes from bryan holt workshops",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rimraf lib",
+    "build": "tsc src/*.ts --outDir lib --types node --module commonjs --target ES2017",
+    "test": "echo 'No tests'"
+  },
+  "devDependencies": {}
+}
