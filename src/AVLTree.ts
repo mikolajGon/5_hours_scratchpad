@@ -39,48 +39,46 @@ class Tree {
   public add(value: number): void {
   }
 
-  private _add(value: number, height: Height ): number {
+  private _add(value: number,  ): Array<number> {
+    let height = [ 0, 0, 0]
     if (!this.value) {
       this.value = value;
     }else if (value <= this.value) {
       if (!this.left) this.left = new Tree();
-      this.left.add(value);
+      height = this.left._add(value);
+      if (this.right) {
+        height = [height[0] + 1, 0, height[1]];
+      } else {
+        height = [height[0] + 1, -1, height[1]];
+      }
     } else {
       if (!this.right) this.right = new Tree();
-      this.right.add(value);
-    }
-    const balance = this._getBalance();
-    if (balance === 1) {
-       height = [ height[0], height[1] + 1];
-    } else if (balance === - 1) {
-      height = [height[0] + 1, height[1] + 1];
-    } else {
-      height = [0, 0];
-    }
-
-    if ((height[0] + height[1]) === 2) {
-      if (height[0] === 2) {
-
+      height =this.right._add(value);
+      if (this.left) {
+        height = [ height[0] + 1, 0, height[1] ];
+      } else {
+        height = [ height[0] + 1, 1, height[1] ];
       }
     }
-  }
-
-  private _getBalance(): number {
-    if (this.left && !this.right) return -1;
-    if (this.right && !this.left) return 1;
-    return 0;
+    return height;
   }
 
   private _rotate(direction: Direction) {
     const oppositeDirection: Direction = direction === 'left' ? 'right' : 'left';
-    //swap the values of nodes A and B
-    const childValue = this[direction].value;
+    // swap the values of nodes A and B
+    const value = this.value;
+    const oppositeChild = this[oppositeDirection];
     this.value = this[direction].value;
-    this[direction].value = childValue;
+    this[direction].value = value;
     // make node B the left child of node A
     this[oppositeDirection] = this[direction];
-    //make node C the right child of node A
+    // make node C the right child of node A
     this[direction] = this[oppositeDirection][direction]
+    // move node B's left!! child to its tight!! child
+    this[oppositeDirection][direction] = this[direction][direction]
+    // make node A's _original_ left child (which was null in this case) the left child of node B
+    this[oppositeDirection][oppositeDirection] = oppositeChild;
+    // update the heights of all the nodes involved
   }
 
 }
